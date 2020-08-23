@@ -38,3 +38,28 @@ export const getUserInfoByToken = async (token: string) => {
 
   return user;
 };
+
+export const registerByInfo = async (
+  username: string,
+  password: string,
+  name: string,
+  birth: string,
+  gender: string,
+) => {
+  const usernameVerify = await UserModel.find({ username });
+  if (usernameVerify.length > 0)
+    throw new Error('중복된 아이디는 사용할 수 없습니다.');
+
+  const hashedPassword = await bcrypt.hashSync(password);
+
+  const user = new UserModel({
+    username,
+    password: hashedPassword,
+    name,
+    birth,
+    gender,
+  });
+  await user.save();
+
+  return user;
+};

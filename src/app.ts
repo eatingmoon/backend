@@ -41,7 +41,7 @@ class App {
       useCreateIndex: true,
     };
 
-    mongoose.connect(`mongodb://localhost:27017/dimigoin`, mongooseOption);
+    mongoose.connect(`mongodb://localhost:27017/test?readPreference=primary&appname=MongoDB%20Compass&ssl=false`, mongooseOption);
   }
 
   private initializeRouter() {

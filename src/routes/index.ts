@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getToken } from '../resources/auth';
+import { getToken, registerByInfo } from '../resources/auth';
 
 const router = Router();
 
@@ -21,9 +21,9 @@ router.post('/auth/login', async (req: Request, res: Response) => {
 
 router.post('/auth/register', async (req: Request, res: Response) => {
   try {
-    // const { username, password } = req.body;
-    // const user = await getToken(username, password);
-    // res.status(200).json(user);
+    const { username, password, name, birth, gender } = req.body;
+    const user = await registerByInfo(username, password, name, birth, gender);
+    res.status(200).json(user);
   } catch ({ message }) {
     res.status(500).json({ message });
   }
