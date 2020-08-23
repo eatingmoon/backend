@@ -63,3 +63,27 @@ export const registerByInfo = async (
 
   return user;
 };
+
+export const getUserExistsByNameUsername = async (
+  name: string,
+  username: string,
+) => {
+  const user = await UserModel.find({ name, username });
+  if (user.length === 0) throw new Error('유저가 없습니다.');
+  return { exists: true };
+};
+
+export const changePasswordByNameUsername = async (
+  name: string,
+  username: string,
+  password: string,
+) => {
+  const hashedPassword = await bcrypt.hashSync(password);
+
+  const user = await UserModel.findOneAndUpdate(
+    { name, username },
+    { password: hashedPassword },
+  );
+
+  return user;
+};
