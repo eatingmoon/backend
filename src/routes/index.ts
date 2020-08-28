@@ -6,6 +6,7 @@ import {
   changePasswordByNameUsername,
 } from '../resources/auth';
 import { addExhibition, editExhibition } from '../resources/exhibition';
+import { editPiece, addPiece } from '../resources/piece';
 
 const router = Router();
 
@@ -57,12 +58,11 @@ router.post('/auth/password', async (req: Request, res: Response) => {
 
 router.post('/exhibition/new', async (req, res) => {
   try {
-    const { title, description, background, frame, hashtag } = req.body;
+    const { title, description, background, hashtag } = req.body;
     const exhibition = await addExhibition(
       title,
       description,
       background,
-      frame,
       hashtag,
     );
     res.status(200).json(exhibition);
@@ -73,16 +73,42 @@ router.post('/exhibition/new', async (req, res) => {
 
 router.post('/exhibition/edit', async (req, res) => {
   try {
-    const { _id, title, description, background, frame, hashtag } = req.body;
+    const { _id, title, description, background, hashtag } = req.body;
     const exhibition = await editExhibition(
       _id,
       title,
       description,
       background,
-      frame,
       hashtag,
     );
     res.status(200).json(exhibition);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
+router.post('/piece/new', async (req, res) => {
+  try {
+    const { title, description, background, frame, image } = req.body;
+    const piece = await addPiece(title, description, background, frame, image);
+    res.status(200).json(piece);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
+router.post('/piece/edit', async (req, res) => {
+  try {
+    const { _id, title, description, background, frame, image } = req.body;
+    const piece = await editPiece(
+      _id,
+      title,
+      description,
+      background,
+      frame,
+      image,
+    );
+    res.status(200).json(piece);
   } catch ({ message }) {
     res.status(500).json({ message });
   }

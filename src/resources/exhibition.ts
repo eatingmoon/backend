@@ -4,14 +4,12 @@ export const addExhibition = async (
   title: string,
   description: string,
   background: { type: 'default' | 'custom'; path: string },
-  frame: string,
   hashtag: Array<string>,
 ) => {
   const exhibition = new ExhibitionModel({
     title,
     description,
     background,
-    frame,
     hashtag,
   });
   await exhibition.save();
@@ -23,7 +21,6 @@ export const editExhibition = async (
   title: string,
   description: string,
   background: { type: 'default' | 'custom'; path: string },
-  frame: string,
   hashtag: Array<string>,
 ) => {
   const exhibition = await ExhibitionModel.findById(_id);
@@ -32,7 +29,6 @@ export const editExhibition = async (
     title,
     description,
     background,
-    frame,
     hashtag,
   });
   return exhibition;
