@@ -1,3 +1,5 @@
+import { Type } from 'ts-mongoose';
+import { exhibitionModel as ExhibitionModel } from '../models/exhibition';
 import { pieceModel as PieceModel } from '../models/piece';
 
 export const getPiece = async (_id?: string) => {
@@ -43,4 +45,22 @@ export const editPiece = async (
     image,
   });
   return piece;
+};
+
+export const connectPiecesToExhibition = async (
+  exhibitionId: string,
+  pieces: Array<string>,
+) => {
+  const exhibition = await ExhibitionModel.findById(exhibitionId);
+  if (!exhibition) throw new Error('정보를 변경할 전시회가 존재하지 않습니다.');
+  const piecesData = await Promise.all(
+    pieces.map(async (pieceId) => {
+      const piece = await PieceModel.findById(pieceId);
+      return piece;
+    }),
+  );
+  await exhibition.updateOne({
+    pieces: piecesData,
+  });
+  return exhibition;
 };

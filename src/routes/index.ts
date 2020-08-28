@@ -10,7 +10,12 @@ import {
   editExhibition,
   getExhibition,
 } from '../resources/exhibition';
-import { editPiece, addPiece, getPiece } from '../resources/piece';
+import {
+  editPiece,
+  addPiece,
+  getPiece,
+  connectPiecesToExhibition,
+} from '../resources/piece';
 
 const router = Router();
 
@@ -134,6 +139,16 @@ router.post('/piece/edit', async (req, res) => {
       image,
     );
     res.status(200).json(piece);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
+router.post('/piece/connect', async (req, res) => {
+  try {
+    const { exhibitionId, pieces } = req.body;
+    const exhibition = await connectPiecesToExhibition(exhibitionId, pieces);
+    res.status(200).json(exhibition);
   } catch ({ message }) {
     res.status(500).json({ message });
   }
