@@ -14,8 +14,6 @@ import { editPiece, addPiece, getPiece } from '../resources/piece';
 
 const router = Router();
 
-// Use imported routes
-
 router.get('/', (_, res: Response) => {
   res.status(200).send('Server Application 🚀');
 });
@@ -43,7 +41,10 @@ router.post('/auth/register', async (req: Request, res: Response) => {
 router.get('/auth/exists', async (req: Request, res: Response) => {
   try {
     const { name, username } = req.query;
-    const user = await getUserExistsByNameUsername(name, username);
+    const user = await getUserExistsByNameUsername(
+      String(name),
+      String(username),
+    );
     res.status(200).json(user);
   } catch ({ message }) {
     res.status(500).json({ message });
