@@ -1,4 +1,5 @@
 import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
+import { userSchema } from './user';
 
 export const exhibitionSchema = createSchema({
   title: Type.string({ required: true }),
@@ -9,6 +10,7 @@ export const exhibitionSchema = createSchema({
   },
   hashtag: Type.array({ required: true }).of(Type.string()),
   pieces: Type.array().of(Type.string()),
+  user: Type.ref(Type.objectId({ required: true })).to('User', userSchema),
 });
 
 export type exhibitionDoc = ExtractDoc<typeof exhibitionSchema>;

@@ -84,6 +84,7 @@ router.post('/exhibition/new', async (req, res) => {
       description,
       background,
       hashtag,
+      String(req.token),
     );
     res.status(200).json(exhibition);
   } catch ({ message }) {
@@ -100,6 +101,7 @@ router.post('/exhibition/edit', async (req, res) => {
       description,
       background,
       hashtag,
+      String(req.token),
     );
     res.status(200).json(exhibition);
   } catch ({ message }) {
@@ -120,7 +122,14 @@ router.get('/piece', async (req: Request, res: Response) => {
 router.post('/piece/new', async (req, res) => {
   try {
     const { title, description, background, frame, image } = req.body;
-    const piece = await addPiece(title, description, background, frame, image);
+    const piece = await addPiece(
+      title,
+      description,
+      background,
+      frame,
+      image,
+      String(req.token),
+    );
     res.status(200).json(piece);
   } catch ({ message }) {
     res.status(500).json({ message });
@@ -137,6 +146,7 @@ router.post('/piece/edit', async (req, res) => {
       background,
       frame,
       image,
+      String(req.token),
     );
     res.status(200).json(piece);
   } catch ({ message }) {
@@ -147,7 +157,11 @@ router.post('/piece/edit', async (req, res) => {
 router.post('/piece/connect', async (req, res) => {
   try {
     const { exhibitionId, pieces } = req.body;
-    const exhibition = await connectPiecesToExhibition(exhibitionId, pieces);
+    const exhibition = await connectPiecesToExhibition(
+      exhibitionId,
+      pieces,
+      String(req.token),
+    );
     res.status(200).json(exhibition);
   } catch ({ message }) {
     res.status(500).json({ message });

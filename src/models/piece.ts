@@ -1,4 +1,5 @@
 import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
+import { userSchema } from './user';
 
 export const pieceSchema = createSchema({
   title: Type.string({ required: true }),
@@ -9,6 +10,7 @@ export const pieceSchema = createSchema({
   },
   frame: Type.string({ required: true }),
   image: Type.string({ required: true }),
+  user: Type.ref(Type.objectId({ required: true })).to('User', userSchema),
 });
 
 export type pieceDoc = ExtractDoc<typeof pieceSchema>;

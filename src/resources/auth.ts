@@ -31,7 +31,6 @@ export const getUserInfoByToken = async (token: string) => {
   if (!tokenVerify) throw new Error('토큰이 올바르지 않습니다.');
 
   const user = UserModel.findById(Object(tokenVerify).user, {
-    _id: false,
     password: false,
   });
   if (!user) throw new Error('유저가 없습니다.');
