@@ -4,6 +4,10 @@ import { pieceSchema } from './piece';
 export const exhibitionSchema = createSchema({
   title: Type.string({ required: true }),
   description: Type.string({ required: true }),
+  background: {
+    type: Type.string({ required: true, enum: ['default', 'custom'] }),
+    path: Type.string({ required: true }),
+  },
   hashtag: Type.array({ required: true }).of(Type.string()),
   pieces: Type.array().of(pieceSchema),
 });
