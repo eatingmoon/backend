@@ -5,7 +5,11 @@ import {
   getUserExistsByNameUsername,
   changePasswordByNameUsername,
 } from '../resources/auth';
-import { addExhibition, editExhibition } from '../resources/exhibition';
+import {
+  addExhibition,
+  editExhibition,
+  getExhibition,
+} from '../resources/exhibition';
 import { editPiece, addPiece } from '../resources/piece';
 
 const router = Router();
@@ -50,6 +54,16 @@ router.post('/auth/password', async (req: Request, res: Response) => {
   try {
     const { name, username, password } = req.body;
     const user = await changePasswordByNameUsername(name, username, password);
+    res.status(200).json(user);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
+router.get('/exhibition', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.query;
+    const user = await getExhibition(String(id));
     res.status(200).json(user);
   } catch ({ message }) {
     res.status(500).json({ message });
