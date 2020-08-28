@@ -1,5 +1,4 @@
 import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
-import { pieceSchema } from './piece';
 
 export const exhibitionSchema = createSchema({
   title: Type.string({ required: true }),
@@ -9,7 +8,7 @@ export const exhibitionSchema = createSchema({
     path: Type.string({ required: true }),
   },
   hashtag: Type.array({ required: true }).of(Type.string()),
-  pieces: Type.array().of(pieceSchema),
+  pieces: Type.array().of(Type.string()),
 });
 
 export type exhibitionDoc = ExtractDoc<typeof exhibitionSchema>;

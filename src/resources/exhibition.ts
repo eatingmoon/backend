@@ -1,10 +1,16 @@
 import { exhibitionModel as ExhibitionModel } from '../models/exhibition';
+import { getPiece } from './piece';
 
 export const getExhibition = async (_id?: string) => {
   if (!_id) throw new Error('조회할 전시회 아이디와 함께 요청해주세요.');
   const exhibition = await ExhibitionModel.findById(_id);
   if (!exhibition) throw new Error('정보를 조회할 전시회가 존재하지 않습니다.');
-  return exhibition;
+  const pieceData = await Promise.all(
+    Object(exhibition.pieces).map(async (pieceId: string) => {
+      return getPiece(pieceId);
+    }),
+  );
+  return { exhibition, piece: pieceData };
 };
 
 export const addExhibition = async (
