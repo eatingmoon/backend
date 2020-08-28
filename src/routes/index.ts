@@ -5,7 +5,7 @@ import {
   getUserExistsByNameUsername,
   changePasswordByNameUsername,
 } from '../resources/auth';
-import { addExhibition } from '../resources/exhibition';
+import { addExhibition, editExhibition } from '../resources/exhibition';
 
 const router = Router();
 
@@ -59,6 +59,23 @@ router.post('/exhibition/new', async (req, res) => {
   try {
     const { title, description, background, frame, hashtag } = req.body;
     const exhibition = await addExhibition(
+      title,
+      description,
+      background,
+      frame,
+      hashtag,
+    );
+    res.status(200).json(exhibition);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
+router.post('/exhibition/edit', async (req, res) => {
+  try {
+    const { _id, title, description, background, frame, hashtag } = req.body;
+    const exhibition = await editExhibition(
+      _id,
       title,
       description,
       background,
