@@ -1,5 +1,12 @@
 import { pieceModel as PieceModel } from '../models/piece';
 
+export const getPiece = async (_id?: string) => {
+  if (!_id) throw new Error('조회할 작품 아이디와 함께 요청해주세요.');
+  const piece = await PieceModel.findById(_id);
+  if (!piece) throw new Error('정보를 조회할 작품이 존재하지 않습니다.');
+  return piece;
+};
+
 export const addPiece = async (
   title: string,
   description: string,

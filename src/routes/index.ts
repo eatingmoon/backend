@@ -10,7 +10,7 @@ import {
   editExhibition,
   getExhibition,
 } from '../resources/exhibition';
-import { editPiece, addPiece } from '../resources/piece';
+import { editPiece, addPiece, getPiece } from '../resources/piece';
 
 const router = Router();
 
@@ -63,8 +63,8 @@ router.post('/auth/password', async (req: Request, res: Response) => {
 router.get('/exhibition', async (req: Request, res: Response) => {
   try {
     const { id } = req.query;
-    const user = await getExhibition(String(id));
-    res.status(200).json(user);
+    const exhibition = await getExhibition(String(id));
+    res.status(200).json(exhibition);
   } catch ({ message }) {
     res.status(500).json({ message });
   }
@@ -96,6 +96,16 @@ router.post('/exhibition/edit', async (req, res) => {
       hashtag,
     );
     res.status(200).json(exhibition);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
+router.get('/piece', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.query;
+    const piece = await getPiece(String(id));
+    res.status(200).json(piece);
   } catch ({ message }) {
     res.status(500).json({ message });
   }
