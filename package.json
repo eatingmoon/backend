@@ -8,7 +8,10 @@
   "scripts": {
     "start": "nodemon",
     "lint": "eslint ./src/**/*.ts",
-    "fix:prettier": "prettier --write \"**/*.*\""
+    "fix:prettier": "prettier --write \"**/*.*\"",
+    "build": "tsc",
+    "deploy:start": "pm2 start ecosystem.config.js",
+    "deploy:remove": "pm2 delete nully-backend"
   },
   "dependencies": {
     "@types/cors": "^2.8.6",
