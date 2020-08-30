@@ -24,19 +24,7 @@ export default {
   },
   newPiece: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {
-        title,
-        description,
-        background,
-        frame,
-        image,
-      }: {
-        title: string;
-        description: string;
-        background: { type: 'default' | 'custom'; path: string };
-        frame: string;
-        image: string;
-      } = req.body;
+      const { title, description, background, frame, image } = req.body;
       const user = await getUserInfoByToken(String(req.token));
       if (!user)
         return next(new HttpException(401, '로그인 이후 이용해주세요.'));
@@ -57,21 +45,7 @@ export default {
   },
   editPiece: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {
-        _id,
-        title,
-        description,
-        background,
-        frame,
-        image,
-      }: {
-        _id: string;
-        title: string;
-        description: string;
-        background: { type: 'default' | 'custom'; path: string };
-        frame: string;
-        image: string;
-      } = req.body;
+      const { _id, title, description, background, frame, image } = req.body;
       const user = await getUserInfoByToken(String(req.token));
       if (!user)
         return next(new HttpException(401, '로그인 이후 이용해주세요.'));

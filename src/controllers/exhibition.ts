@@ -37,17 +37,7 @@ export default {
   },
   newExhibition: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {
-        title,
-        description,
-        background,
-        hashtag,
-      }: {
-        title: string;
-        description: string;
-        background: { type: 'default' | 'custom'; path: string };
-        hashtag: Array<string>;
-      } = req.body;
+      const { title, description, background, hashtag } = req.body;
       const user = await getUserInfoByToken(String(req.token));
       if (!user)
         return next(new HttpException(401, '로그인 이후 이용해주세요.'));
@@ -66,19 +56,7 @@ export default {
   },
   editExhibition: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {
-        _id,
-        title,
-        description,
-        background,
-        hashtag,
-      }: {
-        _id: string;
-        title: string;
-        description: string;
-        background: { type: 'default' | 'custom'; path: string };
-        hashtag: Array<string>;
-      } = req.body;
+      const { _id, title, description, background, hashtag } = req.body;
       const user = await getUserInfoByToken(String(req.token));
       if (!user)
         return next(new HttpException(401, '로그인 이후 이용해주세요.'));
