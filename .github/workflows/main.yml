@@ -1,0 +1,22 @@
+name: Deploy to server
+
+on: [push]
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd ~/project/backend
+          git pull
+          yarn
+          yarn build
+          yarn deploy:remove
+          yarn deploy:start
