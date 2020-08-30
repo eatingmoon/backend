@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import helmet from 'helmet';
 import cors from 'cors';
 import bearerToken from 'express-bearer-token';
+// @ts-ignored
+import errorToSlack from 'express-error-slack';
 import { errorHandler } from './middlewares';
 
 import router from './routes';
@@ -17,6 +19,7 @@ class App {
     this.initializeMiddlewares();
     this.connectMongoDB();
     this.initializeRouter();
+    this.initialErrorHandler();
   }
 
   private initializeMiddlewares() {
@@ -41,11 +44,23 @@ class App {
       useCreateIndex: true,
     };
 
-    mongoose.connect(`mongodb://localhost:27017/test?readPreference=primary&appname=MongoDB%20Compass&ssl=false`, mongooseOption);
+    mongoose.connect(
+      `mongodb://localhost:27017/test?readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
+      mongooseOption,
+    );
   }
 
   private initializeRouter() {
     this.app.use('/', router);
+  }
+
+  private initialErrorHandler() {
+    this.app.use(
+      errorToSlack({
+        webhookUri: process.env.SLACK_WEBHOOK_URI,
+        debug: true,
+      }),
+    );
   }
 }
 
