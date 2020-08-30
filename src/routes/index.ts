@@ -11,6 +11,7 @@ import {
   connectPiecesToExhibition,
 } from '../resources/piece';
 import AuthController from '../controllers/auth';
+import ExhibitionController from '../controllers/exhibition';
 
 const router = Router();
 
@@ -26,48 +27,11 @@ router.get('/auth/exists', AuthController.exists);
 
 router.post('/auth/password', AuthController.changePassword);
 
-router.get('/exhibition', async (req: Request, res: Response) => {
-  try {
-    const { id } = req.query;
-    const exhibition = await getExhibition(String(id));
-    res.status(200).json(exhibition);
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
-});
+router.get('/exhibition', ExhibitionController.getOneExhibition);
 
-router.post('/exhibition/new', async (req, res) => {
-  try {
-    const { title, description, background, hashtag } = req.body;
-    const exhibition = await addExhibition(
-      title,
-      description,
-      background,
-      hashtag,
-      String(req.token),
-    );
-    res.status(200).json(exhibition);
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
-});
+router.post('/exhibition/new', ExhibitionController.newExhibition);
 
-router.post('/exhibition/edit', async (req, res) => {
-  try {
-    const { _id, title, description, background, hashtag } = req.body;
-    const exhibition = await editExhibition(
-      _id,
-      title,
-      description,
-      background,
-      hashtag,
-      String(req.token),
-    );
-    res.status(200).json(exhibition);
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
-});
+router.post('/exhibition/edit', ExhibitionController.editExhibition);
 
 router.get('/piece', async (req: Request, res: Response) => {
   try {
