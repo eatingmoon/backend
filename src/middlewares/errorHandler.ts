@@ -9,7 +9,6 @@ const errorHandler = (
 ) => {
   // eslint-disable-next-line
   if (process.env.NODE_ENV === 'develop') console.error(error);
-
   const { status = 500, message } = error;
   res.status(status).json({ message });
 };

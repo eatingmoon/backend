@@ -1,11 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import {
-  getToken,
-  registerByInfo,
-  getUserExistsByNameUsername,
-  changePasswordByNameUsername,
-} from '../resources/auth';
-import {
   addExhibition,
   editExhibition,
   getExhibition,
@@ -16,6 +10,7 @@ import {
   getPiece,
   connectPiecesToExhibition,
 } from '../resources/piece';
+import AuthController from '../controllers/auth';
 
 const router = Router();
 
@@ -23,58 +18,13 @@ router.get('/', (_, res: Response) => {
   res.status(200).send('Server Application 🚀');
 });
 
-router.post('/auth/login', async (req: Request, res: Response) => {
-  try {
-    const { username, password } = req.body;
-    const user = await getToken(username, password);
-    res.status(200).json(user);
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
-});
+router.post('/auth/login', AuthController.login);
 
-router.post(
-  '/auth/register',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { username, password, name, birth, gender } = req.body;
-      const user = await registerByInfo(
-        username,
-        password,
-        name,
-        birth,
-        gender,
-      );
-      res.status(200).json(user);
-    } catch (err) {
-      next(err);
-      res.status(500).json({ message: err.message });
-    }
-  },
-);
+router.post('/auth/register', AuthController.register);
 
-router.get('/auth/exists', async (req: Request, res: Response) => {
-  try {
-    const { name, username } = req.query;
-    const user = await getUserExistsByNameUsername(
-      String(name),
-      String(username),
-    );
-    res.status(200).json(user);
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
-});
+router.get('/auth/exists', AuthController.exists);
 
-router.post('/auth/password', async (req: Request, res: Response) => {
-  try {
-    const { name, username, password } = req.body;
-    const user = await changePasswordByNameUsername(name, username, password);
-    res.status(200).json(user);
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
-});
+router.post('/auth/password', AuthController.changePassword);
 
 router.get('/exhibition', async (req: Request, res: Response) => {
   try {

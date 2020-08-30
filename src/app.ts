@@ -33,7 +33,6 @@ class App {
         headerKey: 'Bearer',
       }),
     );
-    this.app.use(errorHandler);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -58,9 +57,9 @@ class App {
     this.app.use(
       errorToSlack({
         webhookUri: process.env.SLACK_WEBHOOK_URI,
-        debug: true,
       }),
     );
+    this.app.use(errorHandler);
   }
 }
 
