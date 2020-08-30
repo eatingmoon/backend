@@ -8,7 +8,10 @@ import bearerToken from 'express-bearer-token';
 import errorToSlack from 'express-error-slack';
 import { errorHandler } from './middlewares';
 
-import router from './routes';
+import RootRouter from './routes';
+import AuthRouter from './routes/auth';
+import ExhibitionRouter from './routes/exhibition';
+import PieceRouter from './routes/piece';
 
 class App {
   public app: express.Application;
@@ -50,7 +53,10 @@ class App {
   }
 
   private initializeRouter() {
-    this.app.use('/', router);
+    this.app.use('/', RootRouter);
+    this.app.use('/auth', AuthRouter);
+    this.app.use('/exhibition', ExhibitionRouter);
+    this.app.use('/piece', PieceRouter);
   }
 
   private initialErrorHandler() {
