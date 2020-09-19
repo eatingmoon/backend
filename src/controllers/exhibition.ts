@@ -19,6 +19,25 @@ export default {
       next(err);
     }
   },
+  searchExhibitions: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const exhibitions = await ExhibitionModel.find({
+        $or: [
+          { title: { $regex: String(req.query.title), $options: 'i' } },
+          { description: { $regex: String(req.query.title), $options: 'i' } },
+        ],
+      }).sort({
+        createdAt: 'desc',
+      });
+      res.status(200).json({ exhibitions });
+    } catch (err) {
+      next(err);
+    }
+  },
   getOneExhibition: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.query;

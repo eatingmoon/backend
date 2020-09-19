@@ -10,6 +10,8 @@ router.get('/', ExhibitionController.getOneExhibition);
 
 router.get('/all', ExhibitionController.getAllExhibitions);
 
+router.get('/search', ExhibitionController.searchExhibitions);
+
 router.post(
   '/new',
   validator(

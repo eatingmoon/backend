@@ -3,8 +3,8 @@ import { userSchema } from './user';
 
 export const exhibitionSchema = createSchema(
   {
-    title: Type.string({ required: true }),
-    description: Type.string({ required: true }),
+    title: Type.string({ required: true, text: true }),
+    description: Type.string({ required: true, text: true }),
     background: {
       type: Type.string({ required: true, enum: ['default', 'custom'] }),
       path: Type.string({ required: true }),
