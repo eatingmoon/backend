@@ -22,6 +22,19 @@ export default {
       next(err);
     }
   },
+  getMyPieces: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await getUserInfoByToken(String(req.token));
+      if (!user)
+        return next(new HttpException(401, '로그인 이후 이용해주세요.'));
+      const pieces = await PieceModel.find({ user: user._id }).sort({
+        createdAt: 'desc',
+      });
+      res.status(200).json({ pieces });
+    } catch (err) {
+      next(err);
+    }
+  },
   newPiece: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { title, description, background, frame, image } = req.body;

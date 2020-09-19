@@ -8,6 +8,8 @@ const router = Router();
 
 router.get('/', PieceController.getOnePiece);
 
+router.get('/mine', PieceController.getMyPieces);
+
 router.post(
   '/new',
   validator(
