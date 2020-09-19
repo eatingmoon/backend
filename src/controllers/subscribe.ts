@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getUserInfoByToken } from '../resources/auth';
 import { HttpException } from '../exceptions';
 import { subscribeModel as SubscribeModel } from '../models/subscribe';
+import { userModel as UserModel } from '../models';
 
 export default {
   onSubscribe: async (req: Request, res: Response, next: NextFunction) => {
@@ -56,6 +57,28 @@ export default {
         subscribeTo: String(req.query.user),
       });
       res.status(200).json({ subscribe: !!subscribe });
+    } catch (err) {
+      next(err);
+    }
+  },
+  getMySubscriptions: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const user = await getUserInfoByToken(String(req.token));
+      if (!user)
+        return next(new HttpException(401, '로그인 이후 이용해주세요.'));
+      const subscribe = await SubscribeModel.find({
+        subscribeBy: user._id,
+      });
+      const result = await Promise.all(
+        subscribe.map((doc) =>
+          UserModel.findById(doc.subscribeTo, { password: false }),
+        ),
+      );
+      res.status(200).json({ subscribtion: result });
     } catch (err) {
       next(err);
     }
