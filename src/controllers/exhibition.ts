@@ -27,8 +27,8 @@ export default {
     try {
       const exhibitions = await ExhibitionModel.find({
         $or: [
-          { title: { $regex: String(req.query.title), $options: 'i' } },
-          { description: { $regex: String(req.query.title), $options: 'i' } },
+          { title: { $regex: String(req.query.keyword), $options: 'i' } },
+          { description: { $regex: String(req.query.keyword), $options: 'i' } },
         ],
       }).sort({
         createdAt: 'desc',
