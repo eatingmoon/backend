@@ -101,4 +101,15 @@ export default {
       next(err);
     }
   },
+  drawalAccount: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await getUserInfoByToken(String(req.token));
+      if (!user)
+        return next(new HttpException(403, '로그인 이후 이용해주세요.'));
+      await user.remove();
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  },
 };

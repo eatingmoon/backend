@@ -60,4 +60,6 @@ router.post(
 
 router.get('/me', AuthController.getMyInfo);
 
+router.delete('/drawal', AuthController.drawalAccount);
+
 export default router;
