@@ -8,6 +8,8 @@ const router = Router();
 
 router.get('/', ExhibitionController.getOneExhibition);
 
+router.get('/all', ExhibitionController.getAllExhibitions);
+
 router.post(
   '/new',
   validator(

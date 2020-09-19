@@ -5,6 +5,20 @@ import { getUserInfoByToken } from '../resources/auth';
 import { HttpException } from '../exceptions';
 
 export default {
+  getAllExhibitions: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const exhibitions = await ExhibitionModel.find().sort({
+        createdAt: 'desc',
+      });
+      res.status(200).json({ exhibitions });
+    } catch (err) {
+      next(err);
+    }
+  },
   getOneExhibition: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.query;
