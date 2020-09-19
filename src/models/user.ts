@@ -7,6 +7,7 @@ export const userSchema = createSchema(
     name: Type.string({ required: true }),
     birth: Type.string({ required: true }),
     gender: Type.string({ required: true }),
+    hashtag: Type.string(),
   },
   { timestamps: true },
 );

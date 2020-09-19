@@ -45,4 +45,17 @@ router.post(
   AuthController.changePassword,
 );
 
+router.post(
+  '/edit',
+  validator(
+    Joi.object({
+      name: Joi.string(),
+      birth: Joi.string(),
+      gender: Joi.string(),
+      hashtag: Joi.string(),
+    }),
+  ),
+  AuthController.changeInfo,
+);
+
 export default router;
