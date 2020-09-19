@@ -14,6 +14,8 @@ router.get('/search', ExhibitionController.searchExhibitions);
 
 router.get('/mine', ExhibitionController.getMyExhibitions);
 
+router.get('/recommend', ExhibitionController.getRecommendExhibitions);
+
 router.post(
   '/new',
   validator(

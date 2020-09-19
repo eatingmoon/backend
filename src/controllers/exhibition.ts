@@ -32,6 +32,25 @@ export default {
       next(err);
     }
   },
+  getRecommendExhibitions: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const user = await getUserInfoByToken(String(req.token));
+      if (!user)
+        return next(new HttpException(401, '로그인 이후 이용해주세요.'));
+      const exhibitions = await ExhibitionModel.find()
+        .in('hashtag', user.hashtag)
+        .sort({
+          views: 'desc',
+        });
+      res.status(200).json({ exhibitions });
+    } catch (err) {
+      next(err);
+    }
+  },
   searchExhibitions: async (
     req: Request,
     res: Response,

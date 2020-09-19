@@ -8,7 +8,7 @@ export const userSchema = createSchema(
     bio: Type.string(),
     birth: Type.string({ required: true }),
     gender: Type.string({ required: true }),
-    hashtag: Type.string(),
+    hashtag: Type.array({ required: true }).of(Type.string()),
   },
   { timestamps: true },
 );

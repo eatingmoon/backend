@@ -52,7 +52,7 @@ router.post(
       name: Joi.string(),
       birth: Joi.string(),
       gender: Joi.string(),
-      hashtag: Joi.string(),
+      hashtag: Joi.array(),
     }),
   ),
   AuthController.changeInfo,
