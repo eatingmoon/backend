@@ -12,6 +12,7 @@ import RootRouter from './routes';
 import AuthRouter from './routes/auth';
 import ExhibitionRouter from './routes/exhibition';
 import PieceRouter from './routes/piece';
+import SubscribeRouter from './routes/subscribe';
 
 class App {
   public app: express.Application;
@@ -57,6 +58,7 @@ class App {
     this.app.use('/auth', AuthRouter);
     this.app.use('/exhibition', ExhibitionRouter);
     this.app.use('/piece', PieceRouter);
+    this.app.use('/subscribe', SubscribeRouter);
   }
 
   private initialErrorHandler() {
