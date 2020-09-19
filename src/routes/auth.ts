@@ -58,4 +58,6 @@ router.post(
   AuthController.changeInfo,
 );
 
+router.get('/me', AuthController.getMyInfo);
+
 export default router;

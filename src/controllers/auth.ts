@@ -92,4 +92,13 @@ export default {
       next(err);
     }
   },
+  getMyInfo: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userInfo = await getUserInfoByToken(String(req.token));
+      if (!userInfo) return next(new HttpException(404, '유저가 없습니다.'));
+      res.status(200).json(userInfo);
+    } catch (err) {
+      next(err);
+    }
+  },
 };
