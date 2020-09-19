@@ -5,6 +5,7 @@ export const userSchema = createSchema(
     username: Type.string({ required: true, unique: true }),
     password: Type.string({ required: true }),
     name: Type.string({ required: true }),
+    bio: Type.string(),
     birth: Type.string({ required: true }),
     gender: Type.string({ required: true }),
     hashtag: Type.string(),
