@@ -63,6 +63,8 @@ export default {
         return next(
           new HttpException(404, '정보를 조회할 전시회가 존재하지 않습니다.'),
         );
+      exhibition.views += 1;
+      await exhibition.save();
       const pieceData = await Promise.all(
         Object(exhibition.pieces).map(async (pieceId: string) => {
           const piece = await PieceModel.findById(pieceId);

@@ -12,6 +12,7 @@ export const exhibitionSchema = createSchema(
     hashtag: Type.array({ required: true }).of(Type.string()),
     pieces: Type.array().of(Type.string()),
     user: Type.ref(Type.objectId({ required: true })).to('User', userSchema),
+    views: Type.number({ required: true, default: 0 }),
   },
   { timestamps: true },
 );
