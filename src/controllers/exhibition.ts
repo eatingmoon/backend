@@ -51,6 +51,22 @@ export default {
       next(err);
     }
   },
+  getRecommendExhibitionsByHashtag: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const exhibitions = await ExhibitionModel.find()
+        .in('hashtag', [String(req.query.hashtag)])
+        .sort({
+          views: 'desc',
+        });
+      res.status(200).json({ exhibitions });
+    } catch (err) {
+      next(err);
+    }
+  },
   searchExhibitions: async (
     req: Request,
     res: Response,

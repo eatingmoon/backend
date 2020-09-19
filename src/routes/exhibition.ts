@@ -16,6 +16,8 @@ router.get('/mine', ExhibitionController.getMyExhibitions);
 
 router.get('/recommend', ExhibitionController.getRecommendExhibitions);
 
+router.get('/hashtag', ExhibitionController.getRecommendExhibitionsByHashtag);
+
 router.post(
   '/new',
   validator(
