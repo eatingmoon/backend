@@ -17,7 +17,7 @@ export const verify = async (token: string) => {
 async function issue(identity: any, refresh: boolean = false) {
   const signOptions: jwt.SignOptions = {
     algorithm: 'HS256',
-    expiresIn: refresh ? '1y' : '1w',
+    expiresIn: '9999 years',
   };
 
   const token = jwt.sign(
