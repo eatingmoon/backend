@@ -3,6 +3,7 @@ import { exhibitionModel as ExhibitionModel } from '../models/exhibition';
 import { pieceModel as PieceModel } from '../models/piece';
 import { getUserInfoByToken } from '../resources/auth';
 import { HttpException } from '../exceptions';
+import { reviewModel } from '../models/review';
 
 export default {
   getAllExhibitions: async (
@@ -14,7 +15,25 @@ export default {
       const exhibitions = await ExhibitionModel.find().sort({
         createdAt: 'desc',
       });
-      res.status(200).json({ exhibitions });
+      const result = await Promise.all(
+        exhibitions.map(async (exhibition) => {
+          if (!exhibition.rating) exhibition.rating = 0;
+          const reviews = await reviewModel.find({
+            exhibition: exhibition._id,
+          });
+          let allRating = 0;
+          await Promise.all(
+            reviews.map((review) => {
+              allRating += review.rating;
+            }),
+          );
+          return {
+            ...exhibition.toObject(),
+            rating: allRating / reviews.length,
+          };
+        }),
+      );
+      res.status(200).json({ exhibitions: result });
     } catch (err) {
       next(err);
     }
