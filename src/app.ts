@@ -14,6 +14,7 @@ import ExhibitionRouter from './routes/exhibition';
 import PieceRouter from './routes/piece';
 import SubscribeRouter from './routes/subscribe';
 import LikeRouter from './routes/like';
+import ReviewRouter from './routes/review';
 
 class App {
   public app: express.Application;
@@ -61,6 +62,7 @@ class App {
     this.app.use('/piece', PieceRouter);
     this.app.use('/subscribe', SubscribeRouter);
     this.app.use('/like', LikeRouter);
+    this.app.use('/review', ReviewRouter);
   }
 
   private initialErrorHandler() {
